@@ -1,30 +1,50 @@
-import { useSelector } from 'react-redux';
-import {
-  selectError,
-  selectFilteredContacts,
-  selectIsLoading,
-} from '../../redux/contactsSlice';
-import Contact from '../Contact/Contact';
-import Loader from '../Loader/Loader';
-import css from './ContactList.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { FcContacts } from 'react-icons/fc';
 
-export default function ContactList () {
+import css from './ContactList.module.css';
+import {
+  selectFilteredContacts,
+  selectPhonebookIsError,
+  selectPhonebookIsLoading,
+} from '../../redux/contacts/selectors';
+import { apiGetUserContacts } from '../../redux/contacts/operations';
+import Contact from '../Contact/Contact';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import Loader from '../Loader/Loader';
+
+const ContactList = () => {
+  const dispatch = useDispatch();
+  const isError = useSelector(selectPhonebookIsError);
+  const isLoading = useSelector(selectPhonebookIsLoading);
   const contacts = useSelector(selectFilteredContacts);
-  const isError = useSelector(selectError);
-  const isLoading = useSelector(selectIsLoading);
+
+  useEffect(() => {
+    dispatch(apiGetUserContacts());
+  }, [dispatch]);
+
   return (
-         <>
-             {isError && <div>Something went wrong! Please reload this page.</div>}
-             {isLoading && <Loader />}
-             <ul className={css.contactList}>
-               {contacts.map(contact => {
-                 return (
-                   <li className={css.contactItem} key={contact.id}>
-                     <Contact {...contact} />
-                   </li>
-                 );
-               })}
-             </ul>
-           </>
+    <div>
+      {isError && <ErrorMessage />}
+      {isLoading && <Loader />}
+      {contacts === null || contacts.length === 0 ? (
+        <p className={css.noContactsMess}>
+          There is no list.
+          <FcContacts size={24} /> Add more contacts.
+        </p>
+      ) : (
+        <ul className={css.contactList}>
+          {contacts.map(contact => {
+            return (
+              <li className={css.contactItem} key={contact.id}>
+                <Contact {...contact} />
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
   );
 };
+
+export default ContactList;

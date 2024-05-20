@@ -2,8 +2,9 @@ import css from './ContactForm.module.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
-import { addContact } from '../../redux/contactsOps';
 import { nanoid } from '@reduxjs/toolkit';
+import { toast } from 'react-hot-toast';
+import { apiAddUserContact } from '../../redux/contacts/operations';
 
 
 const ContactsBoxSchema = Yup.object().shape({
@@ -29,12 +30,14 @@ export default function ContactForm () {
       ...contactData,
       id: nanoid(),
     };
-    dispatch(addContact(contactFinalData));
+    dispatch(apiAddUserContact(contactFinalData));
   };
   const handleSubmit = (values, actions) => {
     onAddContacts(values);
+    toast.success('Contact was added successfully');
     actions.resetForm();
   };
+
   return (
     <Formik
       validationSchema={ContactsBoxSchema}
