@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { nanoid } from '@reduxjs/toolkit';
 import { toast } from 'react-hot-toast';
-import { apiAddUserContact } from '../../redux/contacts/operations';
+import { addContact } from '../../redux/contacts/operations';
 
 
 const ContactsBoxSchema = Yup.object().shape({
@@ -30,7 +30,7 @@ export default function ContactForm () {
       ...contactData,
       id: nanoid(),
     };
-    dispatch(apiAddUserContact(contactFinalData));
+    dispatch(addContact(contactFinalData));
   };
   const handleSubmit = (values, actions) => {
     onAddContacts(values);

@@ -1,9 +1,10 @@
 import LoginForm from '../../components/LoginForm/LoginForm';
+import css from './LoginPage.module.css';
 
-export function LoginPage () {
+export default function LoginPage () {
   return (
     <div>
-      <PageTitle>Please log in</PageTitle>
+      <title className={css.title}>Please log in</title>
       <LoginForm />
     </div>
   );

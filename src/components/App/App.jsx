@@ -4,11 +4,10 @@ import Layout from "../Layout/Layout";
 import { useDispatch } from 'react-redux';
 import Modal from 'react-modal';
 import Loader from '../Loader/Loader';
-import { apiRefreshUser } from "../../redux/auth/operations";
-import { selectUserIsRefreshing } from "../../redux/auth/selectors";
+import { refreshUser } from "../../redux/auth/operations";
 import RestrictedRoute from "../../PrivateRoute";
 import PrivateRoute from "../../PrivateRoute";
-import { useAuth } from '../../services/useAuth';
+import { useAuth } from '../../hooks';
 import css from './App.module.css';
 
 const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
@@ -24,9 +23,8 @@ export default function App() {
   const { isRefreshing } = useAuth();
     
   useEffect(() => {
-    dispatch(apiRefreshUser());
+    dispatch(refreshUser());
   }, [dispatch]);
-
 
   return isRefreshing ? (
     <Loader />
@@ -37,22 +35,20 @@ export default function App() {
         <Route
           path="register"
           element={
-            <RestrictedRoute redirectTo="/contacts" component={<RegistrationPage />} />
-          }
+            <RestrictedRoute redirectTo="/contacts" component={<RegistrationPage/>} />}
         />
         <Route
           path="login"
           element={
-            <RestrictedRoute redirectTo="/contacts" component={<LoginPage />} />
-          }
+            <RestrictedRoute redirectTo="/contacts" component={<LoginPage/>} />}
         />
         <Route
           path="contacts"
           element={
-            <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
-          }
+            <PrivateRoute redirectTo="/login" component={<ContactsPage/>} />}
         />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route
+          path="*" element={<NotFoundPage/>} />
       </Route>
     </Routes>
         

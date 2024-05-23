@@ -1,83 +1,89 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { FaSignInAlt } from 'react-icons/fa';
-import css from './LoginForm.module.css';
-import { apiLoginUser } from '../../redux/auth/operations';
+import { useDispatch } from "react-redux";
+import { logIn } from "../../redux/auth/operations";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import css from "./LoginForm.module.css";
+import { Toaster, toast } from "react-hot-toast";
+import { Button, TextField } from "@mui/material";
 
-const UserRegisterSchema = Yup.object().shape({
-  email: Yup.string()
-    .required('Email is required!')
-    .email('Must be a valid email!'),
-  password: Yup.string()
-    .required('Password is required!')
-    .min(8, 'Password must be at least 8 characters!'),
-});
-
-const INITIAL_FORM_DATA = {
-  email: '',
-  password: '',
-};
-
-export default function LoginForm () {
+const LoginForm = () => {
   const dispatch = useDispatch();
 
-  const onLogin = formData => {
-    dispatch(apiLoginUser(formData));
+  const initialValues = {
+    email: "",
+    password: "",
   };
-  const handleSubmit = (data, formActions) => {
-    onLogin(data);
-    formActions.resetForm();
+
+  const validationSchema = Yup.object({
+    email: Yup.string().email("Invalid email address").required("Required"),
+    password: Yup.string().required("Required"),
+  });
+
+  const handleSubmit = (values, { resetForm }) => {
+    dispatch(logIn(values))
+      .unwrap()
+      .then(() => {
+        resetForm();
+      })
+      .catch(() => {
+        toast.error(
+          "Failed to log in. Please check your credentials and try again."
+        );
+      });
   };
 
   return (
-    <Formik
-      validationSchema={UserRegisterSchema}
-      initialValues={INITIAL_FORM_DATA}
-      onSubmit={handleSubmit}
-    >
-      <Form className={css.form}>
-        <h2 className={css.formTitle}>Login</h2>
-
-        <label className={css.label}>
-          <span className={css.labelText}>Email:</span>
-          <Field
-            className={css.formInput}
-            placeholder="YourEmail@gmail.com"
-            type="text"
-            name="email"
-          />
-          <ErrorMessage
-            className={css.errorMsg}
-            name="email"
-            component="span"
-          />
-        </label>
-        <label className={css.label}>
-          <span className={css.labelText}>Password:</span>
-          <Field
-            className={css.formInput}
-            placeholder="Enter your password"
-            type="password"
-            name="password"
-          />
-          <ErrorMessage
-            className={css.errorMsg}
-            name="password"
-            component="span"
-          />
-        </label>
-
-        <button
-          className={css.submitBtn}
-          type="submit"
-          title="Click to login user"
-          aria-label="Login button"
-        >
-          Sign In
-          <FaSignInAlt size={24} color="#261605" />
-        </button>
-      </Form>
-    </Formik>
+    <>
+      <Toaster />
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        <Form className={css.form} autoComplete="off">
+          <Field name="email">
+            {({ field, meta }) => (
+              <div>
+                <TextField
+                  {...field}
+                  type="email"
+                  label="Email"
+                  fullWidth
+                  className={css.label}
+                />
+                {meta.touched && meta.error && (
+                  <div className={css.error}>{meta.error}</div>
+                )}
+              </div>
+            )}
+          </Field>
+          <Field name="password">
+            {({ field, meta }) => (
+              <div>
+                <TextField
+                  {...field}
+                  type="password"
+                  label="Password"
+                  fullWidth
+                  className={css.label}
+                />
+                {meta.touched && meta.error && (
+                  <div className={css.error}>{meta.error}</div>
+                )}
+              </div>
+            )}
+          </Field>
+          <Button
+            type="submit"
+            variant="contained"
+            className={css.submitBtn}
+          >
+            Log In
+          </Button>
+        </Form>
+      </Formik>
+    </>
   );
 };
+
+export default LoginForm;

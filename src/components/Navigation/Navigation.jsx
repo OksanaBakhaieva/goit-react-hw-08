@@ -1,25 +1,21 @@
-import { NavLink } from 'react-router-dom';
-import clsx from 'clsx';
-import css from './Navigation.module.css';
-import { useAuth } from '../../services/useAuth';
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../../hooks";
+import { Divider, Stack } from "@mui/material";
+import css from './Navigation.module.css'
 
-export const Navigation = () => {
-   const { isLoggedIn } = useAuth();
-  const getNavLinkClassNames = ({ isActive }) =>
-    clsx(css.headerLink, {
-      [css.active]: isActive,
-    });
+const Navigation = () => {
+  const { isLoggedIn } = useAuth();
 
   return (
-    <nav className={css.navigation}>
-      <NavLink className={getNavLinkClassNames} to="/">
-        Home
-      </NavLink>
-      {isLoggedIn && (
-        <NavLink className={getNavLinkClassNames} to="/contacts">
-          Contacts
-        </NavLink>
-      )}
-    </nav>
+    <Stack
+      direction="row"
+      divider={<Divider orientation="vertical" flexItem />}
+      spacing={2}
+      className={css.navigation}    >
+      <NavLink to="/">Home</NavLink>
+      {isLoggedIn && <NavLink to="/contacts">Contacts</NavLink>}
+    </Stack>
   );
 };
+
+export default Navigation;

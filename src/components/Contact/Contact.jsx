@@ -8,10 +8,7 @@ import { toast } from 'react-hot-toast';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
 import { RiEdit2Fill } from 'react-icons/ri';
 import { IoClose } from 'react-icons/io5';
-import {
-  apiDeleteUserContact,
-  apiEditUserContact,
-} from '../../redux/contacts/operations';
+import { deleteContact, editContact } from '../../redux/contacts/operations';
 
 export default function Contact (contact) {
   const dispatch = useDispatch();
@@ -29,7 +26,7 @@ export default function Contact (contact) {
   };
 
   const handleSave = () => {
-    dispatch(apiEditUserContact(editedContact));
+    dispatch(editContact(editedContact));
     setIsModalEditOpen(false);
     toast.success('Contact was edited successfully');
   };
@@ -44,7 +41,7 @@ export default function Contact (contact) {
   }, [editedContact]);
 
   const confirmDelete = () => {
-    dispatch(apiDeleteUserContact(contact.id));
+    dispatch(deleteContact(contact.id));
     toast.success('Contact was deleted successfully');
     setIsModalDeleteOpen(false);
   };
@@ -70,7 +67,7 @@ export default function Contact (contact) {
         <button className={css.button} title="Click to edit contact" aria-label="Editing contact" type="submit" onClick={openEditModal}>
           <RiEdit2Fill size={24} color="#ef5c0d" />
         </button>
-        <button className={css.functionalButton} title="Click to delete contact" aria-label="Deleting contact" type="button" onClick={openModalDelete}>
+        <button className={css.button} title="Click to delete contact" aria-label="Deleting contact" type="button" onClick={openModalDelete}>
           <RiDeleteBin2Fill size={24} color="#ef5c0d" />
         </button>
       </div>

@@ -1,10 +1,10 @@
-import PageTitle from '../../components/PageTitle/PageTitle';
 import RegisterForm from '../../components/RegistrationForm/RegistrationForm';
+import css from './Registration.module.css';
 
 export function RegistrationPage () {
   return (
     <>
-        <PageTitle>Registration</PageTitle>
+        <title className={css.title}>Registration</title>
         <RegisterForm />
     </>
   );

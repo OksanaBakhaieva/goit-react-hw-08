@@ -3,12 +3,13 @@ import { useEffect } from 'react';
 import { FcContacts } from 'react-icons/fc';
 
 import css from './ContactList.module.css';
+
 import {
   selectFilteredContacts,
   selectPhonebookIsError,
   selectPhonebookIsLoading,
 } from '../../redux/contacts/selectors';
-import { apiGetUserContacts } from '../../redux/contacts/operations';
+import { fetchContacts } from '../../redux/contacts/operations';
 import Contact from '../Contact/Contact';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Loader from '../Loader/Loader';
@@ -20,7 +21,7 @@ const ContactList = () => {
   const contacts = useSelector(selectFilteredContacts);
 
   useEffect(() => {
-    dispatch(apiGetUserContacts());
+    dispatch(fetchContacts());
   }, [dispatch]);
 
   return (

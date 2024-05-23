@@ -2,13 +2,14 @@ import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AppBar } from '../AppBar/AppBar';
-import Loader from '../Loader/Loader';
+import css from './Layout.module.css'
 
 export default function Layout () {
   return (
-    <div style={{ maxWidth: 960, margin: '0 auto', padding: '0 16px' }}>
+    <>
+      <div className={css.container}>
       <AppBar />
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={null}>
         <Outlet />
       </Suspense>
       <Toaster
@@ -19,9 +20,11 @@ export default function Layout () {
             background: '#f9e3cc',
             color: '#f57a38',
             marginTop: '25px',
-          },
+          }
         }}
       />
     </div>
+    </>
+    
   );
 };

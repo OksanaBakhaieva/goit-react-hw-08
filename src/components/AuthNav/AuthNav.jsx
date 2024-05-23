@@ -7,7 +7,7 @@ const getNavLinkClassNames = ({ isActive }) =>
     [css.active]: isActive,
   });
 
-export  function AuthNav () {
+export default  function AuthNav () {
   return (
     <div className={css.authNav}>
       <NavLink className={getNavLinkClassNames} to="/register">
