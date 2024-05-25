@@ -1,9 +1,9 @@
-import css from './Contacts.module.css';
+import css from './ContactsPage.module.css';
 import ContactList from '../../components/ContactList/ContactList';
 import ContactForm from '../../components/ContactForm/ContactForm';
 import SearchBox from '../../components/SearchBox/SearchBox';
 
-export function ContactsPage () {
+export default function ContactsPage () {
   return (
     <div className={css.container}>
       <title className={css.title}>Your phonebook</title>

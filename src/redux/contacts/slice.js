@@ -3,7 +3,7 @@ import { addContact, deleteContact, editContact, fetchContacts } from "./operati
 import { logOut } from "../auth/operations";
 
 const INITIAL_STATE = {
-  contacts: null,
+  contacts: [],
   isLoading: false,
   isError: false,
 };

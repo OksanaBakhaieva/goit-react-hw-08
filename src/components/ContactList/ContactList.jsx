@@ -6,8 +6,8 @@ import css from './ContactList.module.css';
 
 import {
   selectFilteredContacts,
-  selectPhonebookIsError,
-  selectPhonebookIsLoading,
+  selectContactsError,
+  selectContactsLoading,
 } from '../../redux/contacts/selectors';
 import { fetchContacts } from '../../redux/contacts/operations';
 import Contact from '../Contact/Contact';
@@ -16,8 +16,8 @@ import Loader from '../Loader/Loader';
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const isError = useSelector(selectPhonebookIsError);
-  const isLoading = useSelector(selectPhonebookIsLoading);
+  const isError = useSelector(selectContactsError);
+  const isLoading = useSelector(selectContactsLoading);
   const contacts = useSelector(selectFilteredContacts);
 
   useEffect(() => {

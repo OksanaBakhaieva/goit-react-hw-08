@@ -4,7 +4,7 @@ import { register } from "../../redux/auth/operations";
 import css from "./RegistrationForm.module.css";
 import { Button, TextField } from "@mui/material";
 
-const RegisterForm = () => {
+const RegistrationForm = () => {
   const dispatch = useDispatch();
 
   const initialValues = {
@@ -126,4 +126,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default RegistrationForm;

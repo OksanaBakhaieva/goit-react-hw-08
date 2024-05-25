@@ -1,16 +1,15 @@
 import { toast } from 'react-hot-toast';
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { BASE_URL } from "../contacts/operations";
 
-axios.defaults.baseURL = BASE_URL;
-
+axios.defaults.baseURL = "https://connections-api.herokuapp.com";
+ 
 const setAuthHeader = (token) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 };
 
 const clearAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = "";
+  axios.defaults.headers.common["Authorization"] = "";
 };
 
 const register = createAsyncThunk(

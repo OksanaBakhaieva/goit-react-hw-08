@@ -1,11 +1,11 @@
-import RegisterForm from '../../components/RegistrationForm/RegistrationForm';
+import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
 import css from './Registration.module.css';
 
-export function RegistrationPage () {
+export default function RegistrationPage () {
   return (
     <>
         <title className={css.title}>Registration</title>
-        <RegisterForm />
+        <RegistrationForm />
     </>
   );
 };
