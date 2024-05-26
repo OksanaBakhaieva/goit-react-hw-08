@@ -1,8 +1,10 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/auth/operations";
 import css from "./RegistrationForm.module.css";
-import { Button, TextField } from "@mui/material";
+import { Toaster } from "react-hot-toast";
+import { IoPersonAddSharp } from 'react-icons/io5';
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();
@@ -13,117 +15,93 @@ const RegistrationForm = () => {
     password: "",
   };
 
-  const handleSubmit = (values, { resetForm }) => {
-    dispatch(register(values))
-      .unwrap()
-      .then(() => {
-        resetForm();
-      });
+  const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .required('User name is required!')
+    .min(2, 'User name must be at least 2 characters!')
+    .max(50, 'User name must be less than 50 characters!'),
+  email: Yup.string()
+    .required('Email is required!')
+    .email('Must be a valid email!'),
+  password: Yup.string()
+    .required('Password is required!')
+    .min(8, 'Password must be at least 8 characters!'),
+  });
+  
+  const onRegister = formData => {
+    dispatch(register(formData));
+  };
+
+  const handleSubmit = (data, formActions) => {
+    onRegister(data);
+    formActions.resetForm();
   };
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validate={(values) => {
-        const errors = {};
-        if (!values.name) {
-          errors.name = "Required";
-        }
-        if (!values.email) {
-          errors.email = "Required";
-        } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-        ) {
-          errors.email = "Invalid email address";
-        }
-        if (!values.password) {
-          errors.password = "Required";
-        } else if (values.password.length < 6) {
-          errors.password = "Password must be at least 6 characters long";
-        }
-        return errors;
-      }}
-    >
-      <Form className={css.form} autoComplete="off">
-        <div>
-          <Field name="name">
-            {({ field, meta }) => (
-              <div>
-                <TextField
-                  {...field}
-                  label="Username"
-                  fullWidth
-                  InputLabelProps={{
-                    style: { color: "#FB9AD1" },
-                  }}
-                  InputProps={{
-                    style: { color: "#FFFFFF" },
-                  }}
-                />
-                {meta.touched && meta.error && (
-                  <div className={css.error}>{meta.error}</div>
-                )}
-              </div>
-            )}
-          </Field>
-        </div>
-        <div>
-          <Field name="email">
-            {({ field, meta }) => (
-              <div>
-                <TextField
-                  {...field}
-                  label="Email"
-                  fullWidth
-                  InputLabelProps={{
-                    style: { color: "#FB9AD1" },
-                  }}
-                  InputProps={{
-                    style: { color: "#FFFFFF" },
-                  }}
-                />
-                {meta.touched && meta.error && (
-                  <div className={css.error}>{meta.error}</div>
-                )}
-              </div>
-            )}
-          </Field>
-        </div>
-        <div>
-          <Field name="password">
-            {({ field, meta }) => (
-              <div>
-                <TextField
-                  {...field}
-                  label="Password"
-                  type="password"
-                  fullWidth
-                  InputLabelProps={{
-                    style: { color: "#FB9AD1" },
-                  }}
-                  InputProps={{
-                    style: { color: "#FFFFFF" },
-                  }}
-                />
-                {meta.touched && meta.error && (
-                  <div className={css.error}>{meta.error}</div>
-                )}
-              </div>
-            )}
-          </Field>
-        </div>
-        <div>
-          <Button
-            type="submit"
-            variant="contained"
-            style={{ marginTop: "15px" }}
-          >
-            Register
-          </Button>
-        </div>
-      </Form>
-    </Formik>
-  );
+    <>
+      <Toaster />
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        <Form className={css.form}>
+            <h2 className={css.formTitle}>Register</h2>
+            <label className={css.label}>
+              <span className={css.labelText}>User name:</span>
+              <Field
+                className={css.formInput}
+                placeholder="Enter your name"
+                type="text"
+                name="name"
+              />
+              <ErrorMessage
+                className={css.errorMsg}
+                name="name"
+                component="span"
+              />
+            </label>
+            <label className={css.label}>
+              <span className={css.labelText}>Email:</span>
+              <Field
+                className={css.formInput}
+                placeholder="Enter your email"
+                type="text"
+                name="email"
+              />
+              <ErrorMessage
+                className={css.errorMsg}
+                name="email"
+                component="span"
+              />
+            </label>
+            <label className={css.label}>
+              <span className={css.labelText}>Password:</span>
+              <Field
+                className={css.formInput}
+                placeholder="Enter your password"
+                type="password"
+                name="password"
+              />
+              <ErrorMessage
+                className={css.errorMsg}
+                name="password"
+                component="span"
+              />
+            </label>
+
+            <button
+              className={css.submitBtn}
+              type="submit"
+              title="Click to register user"
+              aria-label="Register button"
+            >
+              Register <IoPersonAddSharp size={18} color="#261605" />
+            </button>
+          </Form>
+      </Formik>
+      </>
+      );
+      
 };
 
 export default RegistrationForm;

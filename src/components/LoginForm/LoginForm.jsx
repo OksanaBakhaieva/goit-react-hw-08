@@ -1,10 +1,9 @@
 import { useDispatch } from "react-redux";
 import { logIn } from "../../redux/auth/operations";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import css from "./LoginForm.module.css";
-import { Toaster, toast } from "react-hot-toast";
-import { Button, TextField } from "@mui/material";
+import { Toaster } from "react-hot-toast";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -14,22 +13,22 @@ const LoginForm = () => {
     password: "",
   };
 
-  const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email address").required("Required"),
-    password: Yup.string().required("Required"),
-  });
+  const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .required('Email is required!')
+    .email('Must be a valid email!'),
+  password: Yup.string()
+    .required('Password is required!')
+    .min(8, 'Password must be at least 8 characters!'),
+});
 
-  const handleSubmit = (values, { resetForm }) => {
-    dispatch(logIn(values))
-      .unwrap()
-      .then(() => {
-        resetForm();
-      })
-      .catch(() => {
-        toast.error(
-          "Failed to log in. Please check your credentials and try again."
-        );
-      });
+  const onRegister = formData => {
+    dispatch(logIn(formData));
+  };
+
+  const handleSubmit = (data, formActions) => {
+    onRegister(data);
+    formActions.resetForm();
   };
 
   return (
@@ -40,47 +39,46 @@ const LoginForm = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <Form className={css.form} autoComplete="off">
-          <Field name="email">
-            {({ field, meta }) => (
-              <div>
-                <TextField
-                  {...field}
-                  type="email"
-                  label="Email"
-                  fullWidth
-                  className={css.label}
-                />
-                {meta.touched && meta.error && (
-                  <div className={css.error}>{meta.error}</div>
-                )}
-              </div>
-            )}
-          </Field>
-          <Field name="password">
-            {({ field, meta }) => (
-              <div>
-                <TextField
-                  {...field}
-                  type="password"
-                  label="Password"
-                  fullWidth
-                  className={css.label}
-                />
-                {meta.touched && meta.error && (
-                  <div className={css.error}>{meta.error}</div>
-                )}
-              </div>
-            )}
-          </Field>
-          <Button
-            type="submit"
-            variant="contained"
-            className={css.submitBtn}
-          >
-            Log In
-          </Button>
-        </Form>
+       <Form className={css.form}>
+            <h2 className={css.formTitle}>Log In</h2>
+            <label className={css.label}>
+              <span className={css.labelText}>Email:</span>
+              <Field
+                className={css.formInput}
+                placeholder="Enter your email"
+                type="text"
+                name="email"
+              />
+              <ErrorMessage
+                className={css.errorMsg}
+                name="email"
+                component="span"
+              />
+            </label>
+            <label className={css.label}>
+              <span className={css.labelText}>Password:</span>
+              <Field
+                className={css.formInput}
+                placeholder="Enter your password"
+                type="password"
+                name="password"
+              />
+              <ErrorMessage
+                className={css.errorMsg}
+                name="password"
+                component="span"
+              />
+            </label>
+
+            <button
+              className={css.submitBtn}
+              type="submit"
+              title="Click to register user"
+              aria-label="Register button"
+            >
+              Log In 
+            </button>
+          </Form>
       </Formik>
     </>
   );
