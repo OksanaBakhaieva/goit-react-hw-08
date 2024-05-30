@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import Modal from 'react-modal';
 import Loader from '../Loader/Loader';
 import { refreshUser } from "../../redux/auth/operations";
-import RestrictedRoute from "../PrivateRoute";
-import PrivateRoute from "../PrivateRoute";
+import { RestrictedRoute } from "../RestrictedRoute";
+import { PrivateRoute } from "../PrivateRoute";
 import { useAuth } from '../../hooks';
 import css from './App.module.css';
 

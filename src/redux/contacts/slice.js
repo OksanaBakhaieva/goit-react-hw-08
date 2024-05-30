@@ -24,7 +24,7 @@ const contactsSlice = createSlice({
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.contacts = state.contacts.filter(
-          contact => contact.id !== action.payload.id
+          (contact) => contact.id !== action.payload
         );
       })
       .addCase(editContact.fulfilled, (state, action) => {

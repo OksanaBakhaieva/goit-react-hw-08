@@ -49,7 +49,7 @@ const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
     await axios.post("/users/logout");
     clearAuthHeader();
   } catch (error) {
-      toast.error('We are experiencing server issues. Please try again later.');
+    toast.error('We are experiencing server issues. Please try again later.');
     return thunkAPI.rejectWithValue(error.message);
   }
 });
