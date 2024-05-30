@@ -40,7 +40,7 @@ const LoginForm = () => {
         onSubmit={handleSubmit}
       >
        <Form className={css.form}>
-            <h2 className={css.formTitle}>Log In</h2>
+            <h2 className={css.formTitle}>Log in</h2>
             <label className={css.label}>
               <span className={css.labelText}>Email:</span>
               <Field
@@ -76,7 +76,7 @@ const LoginForm = () => {
               title="Click to register user"
               aria-label="Register button"
             >
-              Log In 
+              Log in 
             </button>
           </Form>
       </Formik>

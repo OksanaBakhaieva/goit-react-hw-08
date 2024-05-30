@@ -73,7 +73,7 @@ export default function Contact (contact) {
       </div>
       <Modal className={css.modal} isOpen={isModalEditOpen} onRequestClose={() => setIsModalEditOpen(false)}>
         <button type="button" className={css.closeModalBtn} onClick={cancelEdit}>
-          <IoClose className={css.closeIcon} />
+          <IoClose className={css.closeIcon} color="#fff"/>
         </button>
         <h2>Edit Contact</h2>
         <p className={css.modalText}>Do you want to edit contact?</p>
@@ -101,7 +101,7 @@ export default function Contact (contact) {
             className={css.closeModalBtn}
             onClick={cancelDelete}
           >
-            <IoClose className={css.closeIcon} />
+            <IoClose className={css.closeIcon} color="#fff" />
           </button>
           <h2>Delete this contact?</h2>
           <p className={css.modalText}>

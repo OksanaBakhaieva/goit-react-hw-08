@@ -3,6 +3,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  background-color: var(--accent-color);
+  background-image: url("../../assets/background-image.jpg");
+
+  box-shadow: -8px -8px 12px rgba(199, 190, 185, 0.95),
+    8px 4px 8px rgba(123, 107, 88, 0.95);
 }
 
 .contactItem {

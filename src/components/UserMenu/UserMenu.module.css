@@ -7,9 +7,10 @@
 .welcome {
   font-size: 20px;
   font-weight: 500;
-  color: var(--primary-color);
+  color: #ef5c0d;
   text-shadow: 2px 2px 4px rgba(7, 5, 3, 0.3);
   text-align: center;
+  justify-content: center;
 }
 
 .logOutBtn {

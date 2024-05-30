@@ -8,7 +8,7 @@
 
   --primary-color: #e6e4df;
   --second-color: #261605;
-  --accent-color: #5246f7;
+  --accent-color: #545091;
 }
 
 h1,
@@ -47,5 +47,5 @@ button {
 
 button:hover,
 button:focus {
-  background-color: var(--primary-color);
+  background-color: var(--accent-color);
 }

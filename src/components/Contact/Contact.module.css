@@ -10,7 +10,9 @@
   gap: 8px;
   align-items: baseline;
 }
-
+.modalInput {
+  color: var(--primary-color);
+}
 .item {
   display: flex;
   align-items: stretch;
@@ -41,8 +43,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgb(103, 97, 88);
-  color: var(--second-color);
+  background-color: var(--accent-color);
+  color: var(--primary-color);
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0px 6px 10px rgba(123, 107, 88, 0.95),

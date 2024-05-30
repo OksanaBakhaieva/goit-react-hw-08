@@ -14,7 +14,7 @@ export default  function AuthNav () {
         Register
       </NavLink>
       <NavLink className={getNavLinkClassNames} to="/login">
-        Log In
+        Log in
       </NavLink>
     </div>
   );

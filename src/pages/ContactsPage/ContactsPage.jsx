@@ -6,7 +6,6 @@ import SearchBox from '../../components/SearchBox/SearchBox';
 export default function ContactsPage () {
   return (
     <div className={css.container}>
-      <title className={css.title}>Your phonebook</title>
       <div className={css.infoCont}>
         <div className={css.functionalCont}>
           <ContactForm />

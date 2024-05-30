@@ -2,13 +2,6 @@
   margin-top: 80px;
   text-align: center;
 }
-.title {
-  font-size: 36px;
-  color: var(--accent-color);
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 30px;
-}
 
 .infoMessage {
   font-size: 16px;
